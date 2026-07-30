@@ -30,19 +30,11 @@
 
 --Requires
 local vehicles_list = require "VehiclesList"
+local VanRegistries = require('VanRegistries')
 
--- B42 helpers: resolve Vanvival's custom registry objects and test them safely.
-local function VNV_trait(name)
-    return CharacterTrait.get(ResourceLocation.of("twbVanvival:" .. name))
-end
-local function VNV_hasTrait(player, name)
-    if not player then return false end
-    local t = VNV_trait(name)
-    return t ~= nil and player:hasTrait(t)
-end
-local function VNV_prof(name)
-    return CharacterProfession.get(ResourceLocation.of("twbVanvival:" .. name))
-end
+local VanTraitsRegistry = VanRegistries.traits
+local VanProfessionsRegistry = VanRegistries.professions
+
 
 -- ============================================================================
 -- B42 AUTO-DISCOVERY (VanvivalB42Fix add-on)
@@ -123,9 +115,21 @@ local Vanvival_VehicleManager = {}
 Vanvival_VehicleManager.__index = Vanvival_VehicleManager
 
 local validVehicles = {}
-local validTrailers = {}
-local validRVs = {}
+
+local validVans = {}
+local validStepVans = {}
+local validCamperRVs = {}
+local validBigRVs = {}
+local validBoxTrucks = {}
+local validSemiTrucks = {}
+local validBuses = {}
+local validUtility = {}
 local currentRVmod = nil
+
+local validUtilityTrailers = {}
+local validSemiTrailers = {}
+local validCamperTrailers = {}
+
 
 function VNV_SayLater(player, msg, delayTicks)
     local ticks = delayTicks or 100
@@ -139,15 +143,49 @@ function VNV_SayLater(player, msg, delayTicks)
     Events.OnTick.Add(delayedSay)
 end
 
-function Vanvival_VehicleManager.populateValidVehicles()
-	validVehicles = {}
-	validTrailers = {}
-	validRVs = {}
-	currentRVmod = nil
 
-	if getActivatedMods():contains("\\PROJECTRVInterior42") then
+local function addCategory(source, destination)
+    if not source then return end
+
+    for _, vehicle in ipairs(source) do
+        table.insert(destination, vehicle)
+        table.insert(validVehicles, vehicle)
+    end
+end
+
+local function addTrailerCategory(source, destination)
+	if not source then return end
+
+	for _, trailer in ipairs(source) do
+		table.insert(destination, trailer)
+	end
+end
+
+function Vanvival_VehicleManager.populateValidVehicles()
+validVehicles = {}
+
+validVans = {}
+validStepVans = {}
+validCamperRVs = {}
+validBigRVs = {}
+validBoxTrucks = {}
+validSemiTrucks = {}
+validBuses = {}
+validUtility = {}
+
+validUtilityTrailers = {}
+validSemiTrailers = {}
+validCamperTrailers = {}
+
+currentRVmod = nil
+
+
+
+
+
+	if getActivatedMods():contains("PROJECTRVInterior42") then
 		currentRVmod = "PRI"
-	elseif getActivatedMods():contains("\\RVLife") then
+	elseif getActivatedMods():contains("RVLife") then
 		currentRVmod = "RVL"
 	end
 
@@ -155,35 +193,51 @@ function Vanvival_VehicleManager.populateValidVehicles()
 	for mod_name, vehicle_table in pairs(vehicles_list.vehicles.mods) do
         if getActivatedMods():contains(mod_name) then
 			if vehicle_table.rvSupport == "both" or vehicle_table.rvSupport == currentRVmod then
-				for _, v in ipairs(vehicle_table.vehicles) do
-                	table.insert(validVehicles, v)
-            	end
+				local v = vehicle_table.vehicles
+
+				addCategory(v.vans,        validVans)
+				addCategory(v.stepVans,    validStepVans)
+				addCategory(v.camperRVs,   validCamperRVs)
+				addCategory(v.bigRVs,      validBigRVs)
+				addCategory(v.boxTrucks,   validBoxTrucks)
+				addCategory(v.semiTrucks,  validSemiTrucks)
+				addCategory(v.buses,       validBuses)
+				addCategory(v.utility,     validUtility)
 			end
         end
     end
 
 	-- Vanilla vehicles
-     for _, v in ipairs(vehicles_list.vehicles.vanilla) do
-        table.insert(validVehicles, v)
-    end
+	local v = vehicles_list.vehicles.vanilla
 
-	--Traillers Modded
-    for mod_name, trailer_table in pairs(vehicles_list.trailers.mods) do
-        if getActivatedMods():contains(mod_name) then
+	addCategory(v.vans,       validVans)
+	addCategory(v.stepVans,   validStepVans)
+	addCategory(v.camperRVs,  validCamperRVs)
+	addCategory(v.bigRVs,     validBigRVs)
+	addCategory(v.boxTrucks,  validBoxTrucks)
+	addCategory(v.semiTrucks, validSemiTrucks)
+	addCategory(v.buses,      validBuses)
+	addCategory(v.utility,    validUtility)
+
+	-- Modded trailers
+	for mod_name, trailer_table in pairs(vehicles_list.trailers.mods) do
+		if getActivatedMods():contains(mod_name) then
 			if trailer_table.rvSupport == "both" or trailer_table.rvSupport == currentRVmod then
-				for _, t in ipairs(trailer_table) do
-					table.insert(validTrailers, t)
-				end				
-			end
-        end
-    end
+				local t = trailer_table.trailers
 
-	-- Only add vanilla trailers if no modded trailers exist
-    if #validTrailers == 0 then
-        for _, t in ipairs(vehicles_list.trailers.vanilla) do
-            table.insert(validTrailers, t)
-        end
-    end
+				addTrailerCategory(t.utility,         validUtilityTrailers)
+				addTrailerCategory(t.semi,            validSemiTrailers)
+				addTrailerCategory(t.camperTrailers,  validCamperTrailers)
+			end
+		end
+	end
+
+	-- Vanilla trailers
+	local t = vehicles_list.trailers.vanilla
+
+	addTrailerCategory(t.utility,         validUtilityTrailers)
+	addTrailerCategory(t.semi,            validSemiTrailers)
+	addTrailerCategory(t.camperTrailers,  validCamperTrailers)
 
 	-- B42 AUTO-DISCOVERY: union every installed DRIVEABLE van/RV vehicle script on
 	-- top of the whitelist above (dedup by full name). This is what makes ALL your
@@ -191,15 +245,12 @@ function Vanvival_VehicleManager.populateValidVehicles()
 	local haveVehicle = {}
 	for _, v in ipairs(validVehicles) do haveVehicle[v] = true end
 
-	local dVehicles, dRVs, dTrailers = VNV_discover()
+	local dVehicles, _, dTrailers = VNV_discover()
 	for full in pairs(dVehicles) do
 		if not haveVehicle[full] then
 			haveVehicle[full] = true
 			table.insert(validVehicles, full)
 		end
-	end
-	for full in pairs(dRVs) do
-		table.insert(validRVs, full)
 	end
 
 	-- NOTE: discovered towable trailers (camper / RV caravan living-quarters) are
@@ -210,9 +261,28 @@ function Vanvival_VehicleManager.populateValidVehicles()
 	-- spawn, via the normal random trailer chance.
 	local _ = dTrailers  -- detected but deliberately unused
 
-	print("[VanvivalB42Fix] auto-discovery -> driveable vehicles=" .. tostring(#validVehicles)
-		.. " RVs=" .. tostring(#validRVs)
-		.. " (towable campers excluded; utility trailers=" .. tostring(#validTrailers) .. ")")
+print(
+    "[Vanvival] Vehicles: " .. #validVehicles ..
+    " | Utility trailers: " .. #validUtilityTrailers ..
+    " | Semi trailers: " .. #validSemiTrailers ..
+    " | Camper trailers: " .. #validCamperTrailers
+)
+
+print("Vans:", #validVans)
+print("Step Vans:", #validStepVans)
+print("Camper RVs:", #validCamperRVs)
+print("Big RVs:", #validBigRVs)
+print("Box Trucks:", #validBoxTrucks)
+print("Semi Trucks:", #validSemiTrucks)
+print("Buses:", #validBuses)
+print("Utility:", #validUtility)
+
+print("Utility Trailers:", #validUtilityTrailers)
+print("Semi Trailers:", #validSemiTrailers)
+print("Camper Trailers:", #validCamperTrailers)
+
+
+
 end
 
 local function findBuildingNearSquare(square)
@@ -395,7 +465,7 @@ function Vanvival_VehicleManager.getRandVehicle()
 end
 
 function Vanvival_VehicleManager.getRandTrailer()
-    return validTrailers[ZombRand(#validTrailers) + 1]
+    return validUtilityTrailers[ZombRand(#validUtilityTrailers) + 1]
 end
 
 
@@ -411,122 +481,51 @@ function Vanvival_VehicleManager.spawnVehicle(player)
 	if not square then return end
 
 		local inv = player:getInventory();
-		local profession = player:getDescriptor():getCharacterProfession()
 		local vehicleType, trailerType
 		local trailerChance = SandboxVars.Vanvival.TrailerSpawnChance or 25
 		local vehicleDir = chooseVehicleDirection(square)
 
-		
-		
+	
 		------------------RVOwner Priority---------------------------
-		if VNV_hasTrait(player, "RVOwner") then
-			    local bigRVs = {}
-    			local camperRVs = {}
-			if getActivatedMods():contains("\\FRUsedCarsAlpha") then
-				table.insert(bigRVs, "Base.fr_fl_bounder_86")
-				table.insert(camperRVs, "Base.fr_fo_econoline_rv_86")
-			end
-			if getActivatedMods():contains("\\PzkVanillaPlusCarPack") then
-				table.insert(camperRVs, "Base.pzkFranklinTruckRV")
-			end
-			if getActivatedMods():contains("\\73Winnebago") then
-				table.insert(bigRVs, "Base.73Winnebago")
-			end
+		if player:hasTrait(VanTraitsRegistry.RV_Owner) then
+			-- 75% chance for a full-size RV if available
+			if #validBigRVs > 0 and ZombRand(100) < 75 then
+				vehicleType = validBigRVs[ZombRand(#validBigRVs) + 1]
 
-			-- B42 AUTO-DISCOVERY: add every detected RV/motorhome so the RVOwner
-			-- trait spawns a real RV from ANY installed RV mod, then dedup.
-			-- Auto-discovered RVs
-			for _, rv in ipairs(validRVs) do
-				local lower = string.lower(rv)
+			-- Otherwise use a camper RV
+			elseif #validCamperRVs > 0 then
+				vehicleType = validCamperRVs[ZombRand(#validCamperRVs) + 1]
 
-				if string.find(lower, "winnebago")
-				or string.find(lower, "bounder")
-				or string.find(lower, "motorhome") then
-					table.insert(bigRVs, rv)
-				else
-					table.insert(camperRVs, rv)
-				end
-			end
+			-- Fallback to a big RV if that's all we have
+			elseif #validBigRVs > 0 then
+				vehicleType = validBigRVs[ZombRand(#validBigRVs) + 1]
 
-			-- Remove duplicates
-			local function dedupe(list)
-				local seen = {}
-				local result = {}
-
-				for _, v in ipairs(list) do
-					if not seen[v] then
-						seen[v] = true
-						table.insert(result, v)
-					end
-				end
-
-				return result
-			end
-
-			bigRVs = dedupe(bigRVs)
-			camperRVs = dedupe(camperRVs)
-
-			-- 75% chance for a full-size RV
-			if #bigRVs > 0 and ZombRand(100) < 75 then
-				vehicleType = bigRVs[ZombRand(#bigRVs) + 1]
-
-			elseif #camperRVs > 0 then
-				vehicleType = camperRVs[ZombRand(#camperRVs) + 1]
-
-			elseif #bigRVs > 0 then
-				vehicleType = bigRVs[ZombRand(#bigRVs) + 1]
-
+			-- Final fallback
 			else
-				VNV_SayLater(player, "RVOwner trait detected but no RV mods enabled!")
-				VNV_SayLater(player, "Check Vanvival's Description")
-				vehicleType = Vanvival_VehicleManager.getRandVehicle()
-			end
+				VNV_SayLater(player, "RVOwner trait detected but no compatible RVs found!")
+				VNV_SayLater(player, "Check your enabled vehicle mods.")
+				vehicleType = Vanvival_VehicleManager.getRandVehicle()			
+		end
 
+		------------------Trucker Profession Logic---------------------------
+		elseif player:getDescriptor():getCharacterProfession() == VanProfessionsRegistry.TRUCKER then
 
-			------------------Trucker Profession Logic---------------------------
-		elseif profession == VNV_prof("Trucker") then
-			local TruckOptions, TruckTrailersOptions = {}, {}
-			local hasTruckMod = false
-			local addedCompatible = false
-
-			if getActivatedMods():contains("\\rSemiTruck") then
-				hasTruckMod = true
-				addedCompatible = true
-				table.insert(TruckOptions, "Base.SemiTruck")
-				table.insert(TruckTrailersOptions, "Base.SemiTrailerVan")
-       		end
-			if getActivatedMods():contains("\\ATA_Petyarbuilt") then
-				hasTruckMod = true
-				if currentRVmod == "PRI" then ---Change this later when RV Life adds compability
-					addedCompatible = true
-					table.insert(TruckOptions, "Base.ATAPetyarbuilt")
-					table.insert(TruckOptions, "Base.ATAPetyarbuiltSleeper")
-					table.insert(TruckOptions, "Base.ATAPetyarbuiltSleeperLong")
-					table.insert(TruckTrailersOptions, "Base.TrailerTSMega")
-					--table.insert(TruckTrailersOptions, "Base.TrailerTSMegaAnimal")-- Add when Mickey adds compability!
-				else
-					VNV_SayLater(player, "Autotsar Tuning Atelier - Petyarbuilt 379 [B42] not compatible with RV Life")
-					VNV_SayLater(player, "Autotsar Tuning Atelier - Petyarbuilt 379 [B42] not compatible with RV Life")
+				if #validSemiTrucks == 0 or #validSemiTrailers == 0 then
+					VNV_SayLater(player, "Trucker profession detected but no compatible truck/trailer mods found!")
+					VNV_SayLater(player, "Check Vanvival's Description")
 					vehicleType = Vanvival_VehicleManager.getRandVehicle()
-				end
-			end
-
-			if addedCompatible and #TruckOptions > 0 and #TruckTrailersOptions > 0 then
+				else
 				if not playersquare:isOutside() then
 					VNV_SayLater(player, "Can't spawn Truck -> Spawn using the Nomad/Vanvival Start option")
 					VNV_SayLater(player, "Can't spawn Truck -> Spawn using the Nomad/Vanvival Start option")
 					vehicleType = Vanvival_VehicleManager.getRandVehicle()
-				return
+					return
 				end
-				vehicleType = TruckOptions[ZombRand(#TruckOptions) + 1]
-				trailerType = TruckTrailersOptions[ZombRand(#TruckTrailersOptions) + 1]
-        	else
-				if not hasTruckMod then
-					VNV_SayLater(player, "Trucker profession detected but Truck Mod not enabled!")
-					VNV_SayLater(player, "Check Vanvival's Description")
-					VNV_SayLater(player, "Trucker profession detected but Truck Mod not enabled!")
-					VNV_SayLater(player, "Check Vanvival's Description")					
-					vehicleType = Vanvival_VehicleManager.getRandVehicle()
+
+				vehicleType = validSemiTrucks[ZombRand(#validSemiTrucks) + 1]
+
+				if SandboxVars.Vanvival.TrailerSpawnToggle and #validSemiTrailers > 0 then
+					trailerType = validSemiTrailers[ZombRand(#validSemiTrailers) + 1]
 				end
 			end
 			-------- Default Random Vehicle--------------
@@ -548,7 +547,7 @@ function Vanvival_VehicleManager.spawnVehicle(player)
 
 			--Spawn trailer if defined or random chance
 			if trailerType and SandboxVars.Vanvival.TrailerSpawnToggle then
-				local trailerSquare = findTrailerSquare(square, vehicleDir)
+				local trailerSquare = findTrailerSquare(square, vehicleDir, 10, 16)
 				local trailer = addVehicleDebug(trailerType, vehicleDir, nil, trailerSquare)
 				if trailer then
 					trailer:repair()
@@ -557,7 +556,7 @@ function Vanvival_VehicleManager.spawnVehicle(player)
 				end				
 			elseif ZombRand(100) < trailerChance and SandboxVars.Vanvival.TrailerSpawnToggle then
 				trailerType = Vanvival_VehicleManager.getRandTrailer()
-				local trailerSquare = findTrailerSquare(square, vehicleDir)
+				local trailerSquare = findTrailerSquare(square, vehicleDir, 8,12)
 				local trailer = addVehicleDebug(trailerType, vehicleDir, nil, trailerSquare)				
 				if trailer then
 					trailer:repair()
@@ -566,7 +565,7 @@ function Vanvival_VehicleManager.spawnVehicle(player)
 				end
 			end
 
-			if VNV_hasTrait(player, "VanSurvivor") then
+			if player:hasTrait(VanTraitsRegistry.VAN_SURVIVOR) then
 				ClearVehicleInventory(vehicle)
 				local trunk = vehicle:getPartById("TruckBed") or vehicle:getPartById("Trunk")
 				if trunk then
@@ -601,7 +600,7 @@ local function onPlayerCreated(playerIndex, player)
 		return
 	end
 
-	if VNV_hasTrait(player, "BicycleOwner") and getActivatedMods():contains("\\BicycleMod") and not modData.carSpawned then
+	if player:hasTrait(VanTraitsRegistry.BicycleOwner) and getActivatedMods():contains("\\BicycleMod") and not modData.carSpawned then
 		player:getInventory():AddItem("Bicycle.Bicycle")
 		modData.carSpawned = true
 	end

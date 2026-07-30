@@ -1,0 +1,18 @@
+{
+  "Sandbox_Vanvival": "Vanvival",
+
+  "Sandbox_PurgeOnSpawn": "Eliminar Zumbis ao Iniciar",
+  "Sandbox_PurgeOnSpawn_tooltip": "Ative esta opção para não morrer imediatamente por aparecer ao lado de um zumbi escondido entre as árvores.",
+
+  "Sandbox_PurgeDistance": "Distância de Eliminação",
+  "Sandbox_PurgeDistance_tooltip": "Define até onde o eliminador irá eliminar os zumbis. É executado apenas uma vez ao iniciar.",
+
+  "Sandbox_VehicleSpawnToggle": "Veículo e Reboque Inicial",
+  "Sandbox_VehicleSpawnToggle_tooltip": "Desative esta opção para impedir que veículos e reboques iniciais apareçam, desativando efetivamente o mod.",
+
+  "Sandbox_TrailerSpawnToggle": "Reboque Inicial",
+  "Sandbox_TrailerSpawnToggle_tooltip": "Desative esta opção para impedir que reboques apareçam no início.",
+
+  "Sandbox_TrailerSpawnChance": "Probabilidade de Reboque",
+  "Sandbox_TrailerSpawnChance_tooltip": "Ajuste a probabilidade de um reboque aparecer no início."
+}

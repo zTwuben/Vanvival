@@ -1,0 +1,18 @@
+{
+  "Sandbox_Vanvival": "Vanvival",
+
+  "Sandbox_PurgeOnSpawn": "Purgar al aparecer",
+  "Sandbox_PurgeOnSpawn_tooltip": "Activa esta opción para no morir inmediatamente por aparecer junto a un zombi escondido entre los árboles.",
+
+  "Sandbox_PurgeDistance": "Distancia de purga",
+  "Sandbox_PurgeDistance_tooltip": "Determina hasta dónde llegará el decimador para eliminar zombis. Solo se ejecuta una vez al aparecer.",
+
+  "Sandbox_VehicleSpawnToggle": "Vehículo y remolque inicial",
+  "Sandbox_VehicleSpawnToggle_tooltip": "Desactiva esta opción para impedir que aparezcan vehículos y remolques iniciales, deshabilitando prácticamente el mod.",
+
+  "Sandbox_TrailerSpawnToggle": "Remolque inicial",
+  "Sandbox_TrailerSpawnToggle_tooltip": "Desactiva esta opción para impedir que aparezcan remolques al inicio.",
+
+  "Sandbox_TrailerSpawnChance": "Probabilidad de remolque",
+  "Sandbox_TrailerSpawnChance_tooltip": "Ajusta la probabilidad de que aparezca un remolque al iniciar."
+}

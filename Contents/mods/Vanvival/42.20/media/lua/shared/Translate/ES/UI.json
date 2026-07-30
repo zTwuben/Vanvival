@@ -1,0 +1,16 @@
+{
+  "UI_trait_VanSurvivor": "Superviviente Nómada",
+  "UI_trait_VanSurvivorDesc": "¡Comienza con un vehículo lleno de suministros de supervivencia; agarraste todo lo que pudiste antes de irte!",
+
+  "UI_trait_RVOwner": "Dueño de Casa Rodante",
+  "UI_trait_RVOwnerDesc": "¡Resulta que ya tenías una casa rodante y la estás usando para escapar!",
+
+  "UI_trait_BikeOwner": "Dueño de Bicicleta",
+  "UI_trait_BikeOwnerDesc": "¡Comienza con tu propia bicicleta!",
+
+  "UI_prof_Nomad": "Nómada",
+  "UI_prof_Trucker": "Camionero",
+
+  "UI_prof_TruckerDesc": "Comienza como camionero",
+  "UI_prof_NomadDesc": "Comienza como nómada"
+}
