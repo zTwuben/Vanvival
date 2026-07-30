@@ -1,0 +1,32 @@
+module vanvival
+{
+    character_trait_definition vanvival:VanSurvivor
+    {
+        IsProfessionTrait = false,
+        DisabledInMultiplayer = false,
+        CharacterTrait = vanvival:VanSurvivor,
+        Cost = 1,
+        UIName = UI_trait_VanSurvivor,
+        UIDescription = UI_trait_VanSurvivorDesc,
+    }
+
+    character_trait_definition vanvival:RVOwner
+    {
+        IsProfessionTrait = false,
+        DisabledInMultiplayer = false,
+        CharacterTrait = vanvival:RVOwner,
+        Cost = 1,
+        UIName = UI_trait_RVOwner,
+        UIDescription = UI_trait_RVOwnerDesc,
+    }
+
+        character_trait_definition vanvival:BicycleOwner
+    {
+        IsProfessionTrait = false,
+        DisabledInMultiplayer = false,
+        CharacterTrait = vanvival:BicycleOwner,
+        Cost = 1,
+        UIName = UI_trait_BikeOwner,
+        UIDescription = UI_trait_BikeOwnerDesc,
+    }
+}
