@@ -78,8 +78,16 @@ Vanvival_ZombieDecimator.runPurgeTick = function()
 end
 
 function Vanvival_ZombieDecimator:StartPurge()
+    -- Don't run in multiplayer
+    if isClient() or isServer() then
+        return
+    end
+
+
     if SandboxVars.Vanvival.PurgeOnSpawn then
         Vanvival_ZombieDecimator.purgeCounter = 100
         Events.OnTick.Add(Vanvival_ZombieDecimator.runPurgeTick)
     end
 end
+
+return Vanvival_ZombieDecimator
