@@ -2,6 +2,7 @@ local VanRegistries = require("VanRegistries")
 
 local Vanvival_VehicleRegistry = require("Vanvival_VehicleRegistry")
 local Vanvival_VehicleSpawnHelper = require("Vanvival_VehicleSpawnHelper")
+-- local Vanvival_ZombieDecimator = require("Vanvival_ZombieDecimator") -- removed in mp
 
 local VanTraitsRegistry = VanRegistries.traits
 
@@ -63,7 +64,7 @@ function Vanvival_VehicleSpawner.spawn(player, square, vehicleType, trailerType)
 					container:AddItem("Base.CannedChili")
 				end
 			end
-			Vanvival_ZombieDecimator:StartPurge();
+			--Vanvival_ZombieDecimator:StartPurge(player) -- Removed in MP
         end
 end
 

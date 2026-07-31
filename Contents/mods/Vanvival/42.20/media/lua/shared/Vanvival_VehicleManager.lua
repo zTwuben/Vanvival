@@ -67,29 +67,4 @@ function Vanvival_VehicleManager.spawnVehicle(player)
 end
 
 
-
-
--- Hook for when player is created 
-
-local function onPlayerCreated(playerIndex, player)
-	if not player then return end
-	local modData = player:getModData()
-
-	if not SandboxVars.Vanvival.VehicleSpawnToggle then
-		return
-	end
-
-	if player:hasTrait(VanTraitsRegistry.BicycleOwner) and getActivatedMods():contains("\\BicycleMod") and not modData.carSpawned then
-		player:getInventory():AddItem("Bicycle.Bicycle")
-		modData.carSpawned = true
-	end
-
-	if not modData.carSpawned then
-		Vanvival_VehicleRegistry.populateValidVehicles()
-		Vanvival_VehicleManager.spawnVehicle(player)
-		modData.carSpawned = true
-	end
-
-end
-
-Events.OnCreatePlayer.Add(onPlayerCreated)
+return Vanvival_VehicleManager
