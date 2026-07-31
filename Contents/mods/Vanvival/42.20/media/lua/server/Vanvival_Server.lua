@@ -14,6 +14,9 @@ local function onClientCommand(module, command, player, args)
 
         Vanvival_VehicleRegistry.populateValidVehicles()
         Vanvival_VehicleManager.spawnVehicle(player)
+
+        local modData = player:getModData()
+        modData.carSpawned = true
     end
 end
 
