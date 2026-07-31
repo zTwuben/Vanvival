@@ -52,7 +52,6 @@ local function onPlayerCreated(playerIndex, player)
                     Events.OnTick.Remove(delayedSpawn)
 
                     requestVehicleSpawn(player)
-                    modData.carSpawned = true
                 end
             end
 
