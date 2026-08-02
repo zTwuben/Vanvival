@@ -18,13 +18,23 @@ function Vanvival_VehicleSpawner.spawn(player, square, vehicleType, trailerType)
     	local vehicle = addVehicleDebug(vehicleType, vehicleDir, nil, square)
 
 		if vehicle then
+			print("[Vanvival] Vehicle Key ID = " .. tostring(vehicle:getKeyId()))
 			vehicle:repair()
 			vehicle:setGeneralPartCondition(1,100);
 
 			local gasvalue = vehicle:getPartById("GasTank"):getContainerCapacity() * (0.25 + (ZombRand(100)+1)/100);
 			vehicle:getPartById("GasTank"):setContainerContentAmount(gasvalue);
 
-			inv:AddItem(vehicle:createVehicleKey())
+			local key = vehicle:createVehicleKey()
+
+			print("[Vanvival] Key = " .. tostring(key))
+
+			if key then
+				-- Only give the key here in singleplayer.
+				if not isServer() then
+					inv:AddItem(key)
+				end
+			end
 
 			--Spawn trailer if defined or random chance
 			if trailerType and SandboxVars.Vanvival.TrailerSpawnToggle then
@@ -33,7 +43,13 @@ function Vanvival_VehicleSpawner.spawn(player, square, vehicleType, trailerType)
 				if trailer then
 					trailer:repair()
 					trailer:setGeneralPartCondition(1, 100)
-					inv:AddItem(trailer:createVehicleKey())
+					local trailerKey = trailer:createVehicleKey()
+
+					if trailerKey then
+						if not isServer() then
+							inv:AddItem(trailerKey)
+						end
+					end
 				end				
 			elseif ZombRand(100) < trailerChance and SandboxVars.Vanvival.TrailerSpawnToggle then
 				trailerType = Vanvival_VehicleRegistry.getRandTrailer()
@@ -42,7 +58,13 @@ function Vanvival_VehicleSpawner.spawn(player, square, vehicleType, trailerType)
 				if trailer then
 					trailer:repair()
 					trailer:setGeneralPartCondition(1, 100)
-					inv:AddItem(trailer:createVehicleKey())
+					local trailerKey = trailer:createVehicleKey()
+
+					if trailerKey then
+						if not isServer() then
+							inv:AddItem(trailerKey)
+						end
+					end
 				end
 			end
 
@@ -65,7 +87,12 @@ function Vanvival_VehicleSpawner.spawn(player, square, vehicleType, trailerType)
 				end
 			end
 			--Vanvival_ZombieDecimator:StartPurge(player) -- Removed in MP
+
+
+			return vehicle
         end
+
+		return nil
 end
 
 return Vanvival_VehicleSpawner

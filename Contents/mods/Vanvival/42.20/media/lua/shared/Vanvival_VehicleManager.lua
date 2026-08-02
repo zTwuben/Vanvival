@@ -58,7 +58,7 @@ function Vanvival_VehicleManager.spawnVehicle(player)
     local vehicleType, trailerType =
         Vanvival_VehicleSelector.choose(player, playersquare)
 
-    Vanvival_VehicleSpawner.spawn(
+    return Vanvival_VehicleSpawner.spawn(
         player,
         square,
         vehicleType,

@@ -1,263 +1,135 @@
 version=1
 id=3547444619
-title=[B42] Vanvival - Build's 42 Nomadic Experience
+title=[B42.20 MP] Vanvival - Build's 42 Nomadic Experience
 description=[h1]NOW UPDATED TO 42 STABLE[/h1]
-
 description=
-
 description=[h1]RECOMMENDED MODS[/h1]
-
 description=- [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3543229299&searchtext=rv][b][B42]Project RV Interior[/b][/url]
-
 description=- [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3553635874&searchtext=rv][b]RV Life[/b][/url]
-
 description=- [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3461415167&searchtext=bicycle][b][B42] Bicycle![/b][/url]
-
 description=
-
 description=[h1]CHECK OUT MY OTHER MODS[/h1]
-
 description=- [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3555409948][b][B42] Occupations Rebalanced[/b][/url]
-
 description=- [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3579088411][b][B42] Infirmities [WIP] [/b][/url]
-
 description=- [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3565992124][b][B42] Pathology[/b][/url]
-
 description=
-
 description=[hr][/hr]
-
 description=
-
 description=[h1]Vanvival - The Build 42 Nomad Experience[/h1]
-
 description=
-
 description=[i]Start your journey on wheels and take the apocalypse head-on.[/i]
-
 description=Every run begins with a [b]randomly spawned vehicle[/b] — fueled, partially repaired, and ready to roll.
-
 description=Your new ride comes with [b]keys in the inventory[/b] and enough supplies to hit the road instantly.
-
 description=
-
-description=[h1] Update Log v2.0.0[/h1]
-
+description=[h1] Update Log v2.0.1[/h1]
 description=
-
 description=[list]
-
 description=[*] Now Compatible with Build 42 Stable
-
 description=[*] Removed Compability with maps
-
 description=[*] Integrated Kriz Fix and reworked internal systems for less bugs!
-
+description=[*] Fixed Vehicle dupe in multiplayer
 description=[/list]
-
 description=
-
 description=[hr][/hr]
-
 description=
-
 description=[h1]FAQ[/h1]
-
 description=[h2]Q: Which vehicles can I start with?[/h2]
-
 description=[i]A:[/i] Vanilla options and many supported mods.
-
 description=[h2]Q: Are trailers supported?[/h2]
-
 description=[i]A:[/i] Yes! There’s a [b]25% chance[/b] a trailer will spawn with your vehicle.
-
 description=[h2]Q: Can I use this with other mods?[/h2]
-
 description=[i]A:[/i] Presumably yes! I didn't overwrite any of the main functions of the game.
-
 description=[h2]Q: What does the Nomad occupation do?[/h2]
-
 description=[i]A:[/i] It gives you extra bonuses on some skills.
-
 description=[h2]Q: Why am I getting a RVOwner trait detected but no RV mods enabled! Message[/h2]
-
 description=[i]A:[/i] You've started with the RV Owner Trait, therefore you must enable at least one of the following mods:
-
 description=- [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3488174689&searchtext=+%5BB42%2F1%5D+%2773+Winnebago+Chieftain][b][B42/1] '73 Winnebago Chieftain[/b][/url]
-
 description=- [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2959472220][b]Filibuster Rhymes' Used Cars! - Animation Alpha[/b][/url]
-
 description=- [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3217685049&searchtext=PZK+VLC+%28Vanilla+look-like+car+pack%29][b]PZK VLC (Vanilla look-like car pack)[/b][/url]
-
 description=[h2]Q: Why am I getting a Trucker profession detected but Truck Mod not enabled! Message[/h2]
-
 description=[i]A:[/i] You've started with the Trucker Occupation, therefore you must enable one of the following mods:
-
 description=- [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3409472393&searchtext=W900+Semi-Truck+%5BB42%5D][b]W900 Semi-Truck [B42][/b][/url]
-
 description=- [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3403314193&searchtext=Autotsar+Tuning+Atelier+-+Petyarbuilt+379+%5BB42%5D][b]Autotsar Tuning Atelier - Petyarbuilt 379 [B42][/b] - Only compatible with RV Interiors for now[/url]
-
 description=[h2]Q: What does the Van Survivor trait do?[/h2]
-
 description=[i]A:[/i] It gives you a preset loadout that spawns in your vehicle trunk instead of the randomly generated loot.
-
 description=[h2]Q: Can you add these vehicles?[/h2]
-
 description=[i]A:[/i] Since this mod builds on [b]RV Interiors by Mickey Knox[/b] and [b]RV Life by Bucho Jefe & thepelona[/b], I can only add vehicles that are compatible with those.
-
 description=[h2]Q: Where can I report a bug?[/h2]
-
 description=[i]A:[/i] There's should be a Bug Report discussion pinned, or feel free to post a comment, I tend to reply quickly.
-
 description=[h2]Q: Is this mod fully developped?[/h2]
-
 description=[i]A:[/i] Not yet, I intend to add more content to it. So be on the lookout for future updates.
-
 description=
-
 description=[hr][/hr]
-
 description=
-
 description=[h1]Features[/h1]
-
 description=[list]
-
 description=[*] [b]Random Vehicle Spawns[/b] – Pull from a diverse list, including vanilla options.
-
 description=[*] [b]Fueled & Partially Repaired[/b] – Ready for immediate use.
-
 description=[*] [b]Zombie Purge on Spawn[/b] – Start in a safer zone.
-
 description=[*] [b]Compatible with [B42] RV Interior[/b] & [b]RV Life[/b] – Plus many vehicle mods.
-
 description=[*] [b]Nomadic Spawn Locations[/b] – Why start in a crowded city when you can start anywhere?
-
 description=[*] [b]Vanilla Spawn Locations[/b] – If you like the cities that much go for this
-
 description=[*] [b]Start with the Nomad profession[/b] – Start like a Nomad with a couple of bonuses
-
 description=[*] [b]Start with the Trucker profession[/b] – Start with your own Truck and Trailer!
-
 description=[*] [b]Pick Van Survivor or RV Owner custom traits[/b] – Every trait offers its own perks
-
 description=[/list]
-
 description=
-
 description=[hr][/hr]
-
 description=
-
 description=[h1]Supported Modded Vehicles[/h1]
-
 description=[list]
-
 description=[*] '86 Chevrolet CUCVs + M101A2 Trailer
-
 description=[*] '87 Ford B700/F700 Trucks
-
 description=[*] '63 Volkswagen Type 2 Van
-
 description=[*] Filibuster Rhymes' Used Cars! - Animation Alpha
-
 description=[*] [B41/B42]Company Liveries & loot for Filibuster Rhymes' Used Cars! F700 trucks
-
 description=[*] PZK VLC (Vanilla look-like car pack)
-
 description=[*] [B42/1] '73 Winnebago Chieftain
-
 description=[*]Trailers!
-
 description=[*]Autotsar Trailers B42
-
 description=[*]'90 Mercedes-Benz Unimog U1550L
-
 description=[*]Jesters Franklin Va!uline 4x4
-
 description=[*]Autotsar Tuning Atelier - DeRumba Van v.2.00 [B42]
-
 description=[*]'86 Ford Econoline E-150 + Pop Culture vans
-
 description=[*]W900 Semi-Truck [B42]
-
 description=[*]Autotsar Tuning Atelier - Petyarbuilt 379 [B42] - Only compatible with RV Interiors for now
-
 description=[*][B41/B42]Special Emergency Vehicles & FBI for Filibuster Rhymes' Used Cars!
-
 description=[*][B42] Bicycle!
-
 description=[/list]
-
 description=
-
 description=[hr][/hr]
-
 description=
-
 description=[h1]Live the Nomadic Survival Dream[/h1]
-
 description=[i]Keep moving. Keep surviving. Never look back.[/i]
-
 description=
-
 description=[hr][/hr]
-
 description=
-
 description=[i]I really appreciate your support — every coffee helps keep the mods alive![/i]
-
 description=[url=https://ko-fi.com/twuben][img]https://i.imgur.com/nTPm94r.png[/img][/url]
-
 description=
-
 description=[h1]Credits[/h1]
-
 description=Special thanks to:
-
 description=[list]
-
 description=[*] [b]Monkey[/b] – Original code inspiration via "Monkey's RV Start" mod.
-
 description=[*] [b]Mickey Knox[/b] – B42 version of the RV Interior Mod.
-
 description=[*] [b]Bucho Jefe & thepelona[/b] – For the RV Life mod
-
 description=[*] [b]KrizKovIcePops[/b] – For the previous fix!
-
 description=[/list]
-
 description=
-
 description=
-
 description=[quote=author]
-
 description=© 2025 Twuben. Credit appreciated!
-
 description=
-
 description=[b]Copyright & Permissions Notice[/b]
-
 description=
-
 description=You are free to:
-
 description=- Use this mod on your server.
-
 description=- Add it to public collections.
-
 description=- Extend or add content to this mod.
-
 description=
-
 description=[b]Please give proper credit[/b] if you do any of the above.
-
 description=
-
 description=[b]Mod Permissions According to This [url=http://theindiestone.com/forums/index.php/topic/2530-mod-permissions/?p=36477]Policy[/url][/b]
-
 description=[/quote]
-
 tags=Build 42;Misc;Realistic
 visibility=public

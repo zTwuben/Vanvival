@@ -40,29 +40,28 @@ local function onPlayerCreated(playerIndex, player)
         return
     end
 
-    if not modData.carSpawned then
-        if isClient() then
-            -- Multiplayer: wait a bit for the server
-            local ticks = 120
+if not modData.carSpawned then
+    if isClient() then
+        -- Multiplayer: wait a bit for the server
+        local ticks = 20
 
-            local function delayedSpawn()
-                ticks = ticks - 1
+        local function delayedSpawn()
+            ticks = ticks - 1
 
-                if ticks <= 0 then
-                    Events.OnTick.Remove(delayedSpawn)
+            if ticks <= 0 then
+                Events.OnTick.Remove(delayedSpawn)
 
-                    requestVehicleSpawn(player)
-                    modData.carSpawned = true
-                end
+                requestVehicleSpawn(player)
             end
-
-            Events.OnTick.Add(delayedSpawn)
-        else
-            -- Singleplayer: spawn immediately
-            requestVehicleSpawn(player)
-            modData.carSpawned = true
         end
+
+        Events.OnTick.Add(delayedSpawn)
+    else
+        -- Singleplayer: spawn immediately
+        requestVehicleSpawn(player)
+        modData.carSpawned = true
     end
+end
 end
 
 Events.OnCreatePlayer.Add(onPlayerCreated)
